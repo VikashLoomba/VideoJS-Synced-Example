@@ -13,7 +13,9 @@ myPlayers[1].ready(function(){
 });
 
 function sync() {
-	myPlayers[1].currentTime(myPlayers[0].currentTime())
+	if (Math.abs(myPlayers[0].currentTime() - myPlayers[1].currentTime()) > 0.500) {
+		myPlayers[1].currentTime(myPlayers[0].currentTime());
+	}
 }
 function playVideo() {
 	myPlayers[1].play();
@@ -33,23 +35,7 @@ myPlayers[0].on('seeking', function(){
 	sync();
 });
 myPlayers[0].on('error',  function (e) {
-   switch (e.target.error.code) {
-     case e.target.error.MEDIA_ERR_ABORTED:
-       alert('You aborted the video playback.');
-       break;
-     case e.target.error.MEDIA_ERR_NETWORK:
-       alert('A network error caused the video download to fail part-way.');
-       break;
-     case e.target.error.MEDIA_ERR_DECODE:
-       alert('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
-       break;
-     case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-       alert('The video could not be loaded, either because the server or network failed or because the format is not supported.');
-       break;
-     default:
-       alert('An unknown error occurred.');
-       break;
-   }
+
 });
 
 
